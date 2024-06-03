@@ -5,14 +5,13 @@ on:
     branches:
       - main
 
-env:
-  AWS_REGION: us-east-1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
 jobs:
   deployterraform:
     runs-on: ubuntu-latest
+    env:
+        AWS_REGION: us-east-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
     - name: Checkout Code
@@ -23,13 +22,13 @@ jobs:
       with:
         node-version: '16.x'
 
-    - name: Set up Terraform
+    - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.4.6
 
     - name: Terraform Init
-      run: terraform init
+      run: |
+        terraform fmt
+        terraform init -upgrade
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
