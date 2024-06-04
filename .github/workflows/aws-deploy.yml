@@ -29,7 +29,10 @@ jobs:
         terraform_version: 1.4.6  
 
     - name: Terraform Init
-      run: terraform init
+      id: init
+      run: |
+          terraform fmt
+          terraform init -upgrade
       working-directory: Github-actions-terraform/server
 
     - name: Terraform Apply
