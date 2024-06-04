@@ -9,10 +9,10 @@ jobs:
   deployterraform:
     runs-on: ubuntu-latest
     env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
     steps:
     - name: Checkout Code
@@ -36,16 +36,15 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Terraform Init
-      id: init
       run: |
-          terraform fmt
-          terraform init -upgrade
+        terraform fmt
+        terraform init -upgrade
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
-          TF_VAR_aws_s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
-          TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
+        TF_VAR_aws_s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
+        TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
 
 
 
