@@ -30,11 +30,11 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: Github-actions-terraform/server
+
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
-      working-directory: Github-actions-terraform/server
+
 
 
 
