@@ -8,10 +8,6 @@ on:
 jobs:
   deployterraform:
     runs-on: ubuntu-latest
-    env:
-        AWS_REGION: us-east-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
     - name: Checkout Code
@@ -24,11 +20,18 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.4.6
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: us-east-1
 
     - name: Terraform Init
-      run: |
-        terraform fmt
-        terraform init -upgrade
+      run: terraform init
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
