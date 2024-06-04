@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
@@ -84,7 +92,7 @@ resource "aws_security_group" "ubuntuSG" {
   }
 
   tags = {
-    Name = "Ubuntu-SG"
+    Name = "UbuntuSG"
   }
 }
 
