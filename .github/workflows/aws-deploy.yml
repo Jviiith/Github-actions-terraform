@@ -29,9 +29,7 @@ jobs:
         terraform_version: 1.4.6 
 
     - name: Terraform Init
-      run: |
-        terraform fmt
-        terraform init -upgrade
+      run: terraform init
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
