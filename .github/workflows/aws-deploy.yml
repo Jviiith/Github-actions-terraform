@@ -5,31 +5,39 @@ on:
     branches:
       - main
 
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
   deployterraform:
     runs-on: ubuntu-latest
-    env:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Use Node.js 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.x'
-
-    - name: Setup Terraform
+    - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.4.6
-    
+        terraform_version: 1.4.6  
+      working-directory: Github-actions-terraform/server
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
     - name: Terraform Init
       run: terraform init
+      working-directory: Github-actions-terraform/server
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      working-directory: Github-actions-terraform/server
+
+
 
