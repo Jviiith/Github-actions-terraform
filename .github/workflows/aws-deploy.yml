@@ -22,7 +22,6 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.6  
-      working-directory: Github-actions-terraform/server
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
