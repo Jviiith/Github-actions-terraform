@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "terraform-state-bucket-demo"
+    bucket = "terraform-state-bucket-demo01"
     key    = "terraform.tfstate"
   }
 }
@@ -106,7 +106,6 @@ resource "aws_instance" "Ubuntu-server" {
   ami                         = "ami-0cf10cdf9fcd62d37"
   instance_type               = "t2.micro"
   availability_zone           = "us-east-1a"
-  key_name                    = "ssh-server-key"
   vpc_security_group_ids      = [aws_security_group.ubuntuSG.id]
   subnet_id                   = aws_subnet.public-subnet.id
   associate_public_ip_address = true
